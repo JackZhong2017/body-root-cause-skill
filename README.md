@@ -127,4 +127,6 @@ clawhub install body-root-cause
 
 ## License
 
-MIT
+MIT-0 — 可自由使用、修改、商用，无需署名。
+
+> ClawHub 平台上发布的所有 skill 统一采用 MIT-0 协议。

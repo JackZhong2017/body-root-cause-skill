@@ -1,9 +1,11 @@
 ---
 name: body-root-cause
-description: 循证营养学视角的内服补剂诊断推理框架，核心引擎为贝叶斯假设更新。适用于：皮肤/护肤问题的内服调理（痤疮/色斑/敏感/油皮等根因分析）；以及通用补剂购买决策（不知道从哪个方向入手、想了解哪些成分适合自己）。当用户询问"吃什么能改善皮肤"、"为什么一直反复"、"需要补充什么营养素"、"补剂怎么搭配"、"我想买补剂但不知道从哪里开始"时使用。严格只处理内服Track，不输出外用产品建议。
+description: 循证营养学 + 贝叶斯推理的内服补剂诊断框架。排查痤疮/疲劳/睡眠/激素等问题的系统性根因，输出优先级补剂方案。不做外用护肤建议。
 version: 1.0.0
-homepage: https://github.com/JackZhong2017/body-root-cause-skill
-license: MIT
+metadata:
+  openclaw:
+    emoji: "🌿"
+    homepage: https://github.com/JackZhong2017/body-root-cause-skill
 ---
 
 # 内服补剂诊断推理 Skill
