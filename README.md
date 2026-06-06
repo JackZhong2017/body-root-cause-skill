@@ -42,22 +42,80 @@
 - **触发因素（Trigger）**：短期出现的外部事件  
 - **维持因素（Perpetuating Factor）**：让问题持续的条件
 
-## 使用方式
+## 安装方式
 
-这是一个 Claude Code Skill 文件，适用于 [Claude Code](https://claude.ai/code) 环境。
+### Claude Code
 
-**安装方法：**
+**方式一：命令行一键安装（推荐）**
 
-将 `skincare-internal/SKILL.md` 放入你的 Claude Code skill 目录，或直接在对话中引用。
+```bash
+# 个人全局安装（所有项目可用）
+mkdir -p ~/.claude/skills && \
+  git clone https://github.com/JackZhong2017/body-root-cause-skill.git /tmp/brc-skill && \
+  cp -r /tmp/brc-skill/skincare-internal ~/.claude/skills/body-root-cause
 
-**触发示例：**
+# Windows（PowerShell）
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills"
+git clone https://github.com/JackZhong2017/body-root-cause-skill.git "$env:TEMP\brc-skill"
+Copy-Item -Recurse "$env:TEMP\brc-skill\skincare-internal" "$env:USERPROFILE\.claude\skills\body-root-cause"
+```
+
+**方式二：手动安装**
+
+1. 下载本仓库：点击右上角 `Code → Download ZIP`，解压
+2. 将 `skincare-internal` 文件夹复制到以下路径：
+
+| 系统 | 路径 |
+|------|------|
+| macOS / Linux | `~/.claude/skills/body-root-cause/` |
+| Windows | `%USERPROFILE%\.claude\skills\body-root-cause\` |
+
+3. 确认目录结构为 `skills/body-root-cause/SKILL.md`（不要多嵌套一层）
+4. 重启 Claude Code，输入 `/skills` 确认加载成功
+
+> **项目级安装**：将文件夹放到项目目录下的 `.claude/skills/body-root-cause/`，仅对该项目生效。
+
+---
+
+### OpenClaw
+
+**方式一：直接粘贴 GitHub 链接**
+
+在对话中发送：
+```
+Install this skill: https://github.com/JackZhong2017/body-root-cause-skill
+```
+OpenClaw 会自动识别并安装。
+
+**方式二：CLI 安装**
+
+```bash
+# 安装到当前工作区
+openclaw skills install https://github.com/JackZhong2017/body-root-cause-skill
+
+# 全局安装（所有 agent 可用）
+openclaw skills install https://github.com/JackZhong2017/body-root-cause-skill --global
+```
+
+**方式三：ClawHub 安装**（上架后可用）
+
+```bash
+clawhub install body-root-cause
+```
+
+---
+
+### 触发示例
+
+安装完成后，直接在对话中提问即可自动触发：
 
 ```
 我最近痤疮一直反复，吃什么能改善？
 为什么我下巴总是长痘？
 帮我搭配一套针对 PCOS 的补剂方案
 我睡眠很差，镁/L-茶氨酸/甘氨酸哪个更适合我？
-最近容易疲劳，不知道是缺铁还是缺B12还是别的原因
+最近容易疲劳，不知道是缺铁还是缺 B12 还是别的原因
+我想买基础补剂，不知道从哪里开始
 ```
 
 ## 重要说明
