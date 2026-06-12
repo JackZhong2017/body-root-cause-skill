@@ -1,6 +1,32 @@
 # Body Root Cause Skill
 
+![GitHub stars](https://img.shields.io/github/stars/JackZhong2017/body-root-cause-skill?style=flat-square)
+![License](https://img.shields.io/github/license/JackZhong2017/body-root-cause-skill?style=flat-square)
+![Skill](https://img.shields.io/badge/Skill-Agent-111111?style=flat-square)
+![Claude Code](https://img.shields.io/badge/Claude%20Code-Supported-6B5B95?style=flat-square)
+![OpenClaw](https://img.shields.io/badge/OpenClaw-Supported-2E8B57?style=flat-square)
+
+> 🌏 **English version: [README.en.md](./README.en.md)**
+
 一个基于**循证营养学 + 贝叶斯推理**的内服补剂诊断 Skill，帮助你从系统性根因出发，找到身体问题的真正答案。
+
+## 30秒开始
+
+```bash
+npx skills add https://github.com/JackZhong2017/body-root-cause-skill --skill body-root-cause
+```
+
+也可以直接把这段话发给有 shell 权限的 AI Agent：
+
+```text
+帮我安装 body-root-cause。请把 https://github.com/JackZhong2017/body-root-cause-skill 克隆到 ~/.claude/skills/body-root-cause，安装完成后检查 SKILL.md 是否存在。
+```
+
+已经安装过的话，用这段话更新：
+
+```text
+帮我更新 body-root-cause。请进入 ~/.claude/skills/body-root-cause 执行 git pull，然后告诉我当前最新 commit。
+```
 
 ## 它能解决什么问题
 
@@ -52,18 +78,18 @@
 # 个人全局安装（所有项目可用）
 mkdir -p ~/.claude/skills && \
   git clone https://github.com/JackZhong2017/body-root-cause-skill.git /tmp/brc-skill && \
-  cp -r /tmp/brc-skill/skincare-internal ~/.claude/skills/body-root-cause
+  cp -r /tmp/brc-skill/body-root-cause ~/.claude/skills/body-root-cause
 
 # Windows（PowerShell）
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills"
 git clone https://github.com/JackZhong2017/body-root-cause-skill.git "$env:TEMP\brc-skill"
-Copy-Item -Recurse "$env:TEMP\brc-skill\skincare-internal" "$env:USERPROFILE\.claude\skills\body-root-cause"
+Copy-Item -Recurse "$env:TEMP\brc-skill\body-root-cause" "$env:USERPROFILE\.claude\skills\body-root-cause"
 ```
 
 **方式二：手动安装**
 
 1. 下载本仓库：点击右上角 `Code → Download ZIP`，解压
-2. 将 `skincare-internal` 文件夹复制到以下路径：
+2. 将 `body-root-cause` 文件夹复制到以下路径：
 
 | 系统 | 路径 |
 |------|------|
@@ -127,6 +153,4 @@ clawhub install body-root-cause
 
 ## License
 
-MIT-0 — 可自由使用、修改、商用，无需署名。
-
-> ClawHub 平台上发布的所有 skill 统一采用 MIT-0 协议。
+MIT © 2026 jjjjjjjjjjjjack — 可自由使用、修改、商用，需保留版权声明。完整条款见 [LICENSE](LICENSE)。
