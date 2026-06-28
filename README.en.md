@@ -5,10 +5,13 @@
 ![Skill](https://img.shields.io/badge/Skill-Agent-111111?style=flat-square)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-Supported-6B5B95?style=flat-square)
 ![OpenClaw](https://img.shields.io/badge/OpenClaw-Supported-2E8B57?style=flat-square)
+![Version](https://img.shields.io/badge/version-2.0.0-blue?style=flat-square)
 
 > 🇨🇳 **中文版: [README.md](./README.md)**
 
 A Claude Skill for diagnosing internal (supplement-level) health issues using **evidence-based nutrition + Bayesian reasoning**, helping you trace problems back to their systemic root cause instead of just treating symptoms.
+
+**v2.0: Digital Health Record System.** On first use, the skill guides you through building a personal health record. Across every future conversation, it loads your record automatically — no need to re-explain your conditions, medications, or lab results each time.
 
 ## Quick Start (30 seconds)
 
@@ -47,10 +50,24 @@ It doesn't just tell you "what to take" — it first helps you understand "why t
 ## How it works
 
 ```
-Intake questions → Bayesian weight updates → Root cause localization → Tiered intervention plan
+Health record check → Intake questions (known info auto-skipped) → Bayesian updates → Root cause → Tiered plan → Record update
 ```
 
-**7 root-cause hypotheses**, systematically ruled in or out:
+### Digital Health Record (v2.0 core feature)
+
+Like a real patient file at a clinic — a living, time-stamped record of your health:
+
+- **Baseline info**: chronic conditions, long-term medications, dietary restrictions, allergies
+- **Lab results timeline**: each test result stored with date
+- **Supplement & medication log**: start/stop dates and reasons
+- **Consultation history**: chief complaint, root cause, and plan summary per session
+- **Outcome tracking**: your feedback shapes future recommendations
+
+**Storage (adapts to your environment):**
+- Claude Code: writes to `~/.health-records/medical-record.md` as plain Markdown — portable to any AI tool
+- Mobile App: stores in Claude memory; outputs a copyable summary at the end of each session for backup
+
+### 7 root-cause hypotheses, systematically ruled in or out
 
 | Hypothesis | Root Cause |
 |------|------|
@@ -58,7 +75,7 @@ Intake questions → Bayesian weight updates → Root cause localization → Tie
 | H2 | PCOS / insulin resistance |
 | H3 | Elevated cortisol (stress-driven) |
 | H4 | Gut dysbiosis / H. pylori |
-| H5 | Nutrient deficiency (zinc/vitamin D/Omega-3) |
+| H5 | Nutrient deficiency (zinc/vitamin D/Omega-3/iron) |
 | H6 | Environmental trigger (water quality/pollution/diet change) |
 | H7 | Skincare/medication-induced |
 
@@ -142,6 +159,11 @@ Help me put together a supplement plan for PCOS
 My sleep is bad — which is better for me: magnesium, L-theanine, or glycine?
 I'm often tired — not sure if it's iron deficiency, B12 deficiency, or something else
 I want to start with basic supplements but don't know where to begin
+
+// Health record
+Help me set up my health record
+I want to report back on how last session's plan went
+I just got new lab results — want to update my record
 ```
 
 ## Important notes

@@ -5,10 +5,13 @@
 ![Skill](https://img.shields.io/badge/Skill-Agent-111111?style=flat-square)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-Supported-6B5B95?style=flat-square)
 ![OpenClaw](https://img.shields.io/badge/OpenClaw-Supported-2E8B57?style=flat-square)
+![Version](https://img.shields.io/badge/version-2.0.0-blue?style=flat-square)
 
 > 🌏 **English version: [README.en.md](./README.en.md)**
 
 一个基于**循证营养学 + 贝叶斯推理**的内服补剂诊断 Skill，帮助你从系统性根因出发，找到身体问题的真正答案。
+
+**v2.0 新增：数字病历本系统。** 首次使用自动建档，跨对话追踪你的健康状态变化，每次问诊都能更精准——不用重复说明自己的基础病、用药、体检数据。
 
 ## 30秒开始
 
@@ -47,10 +50,24 @@ npx skills add https://github.com/JackZhong2017/body-root-cause-skill --skill bo
 ## 工作原理
 
 ```
-问诊 → 贝叶斯权重更新 → 根因定位 → 分层干预方案
+病历本检查 → 问诊（已知信息自动跳过）→ 贝叶斯权重更新 → 根因定位 → 分层干预方案 → 病历更新
 ```
 
-**7 大根因假设**，系统性排查：
+### 数字病历本（v2.0 核心功能）
+
+类似医院的病历本，持续记录你的健康状态变化：
+
+- **基础信息**：慢性病、长期用药、饮食限制、过敏
+- **检查报告时间轴**：每次体检数据带日期存档
+- **用药与补剂记录**：何时开始、何时停用、原因
+- **问诊记录**：每次对话的主诉、根因、方案摘要
+- **效果追踪**：你的反馈影响下次推荐权重
+
+**存储方式（按环境自适应）：**
+- Claude Code：写入本地 `~/.health-records/medical-record.md`，标准 Markdown 格式，可迁移至任何 AI 工具
+- 手机 App：存入 Claude 记忆，每次对话结束输出可复制摘要供用户备份
+
+### 7 大根因假设，系统性排查
 
 | 假设 | 根因 |
 |------|------|
@@ -58,14 +75,14 @@ npx skills add https://github.com/JackZhong2017/body-root-cause-skill --skill bo
 | H2 | PCOS / 胰岛素抵抗 |
 | H3 | 皮质醇过高（压力驱动） |
 | H4 | 肠道菌群失调 / H. pylori |
-| H5 | 营养缺乏（锌/维D/Omega-3） |
+| H5 | 营养缺乏（锌/维D/Omega-3/铁） |
 | H6 | 环境触发（水质/污染/饮食骤变） |
 | H7 | 护肤品/药物诱发 |
 
 **输出方案三层覆盖**——只处理触发因素会反复，只处理根因短期无效：
 
 - **根本原因（Root Cause）**：长期存在的系统性问题
-- **触发因素（Trigger）**：短期出现的外部事件  
+- **触发因素（Trigger）**：短期出现的外部事件
 - **维持因素（Perpetuating Factor）**：让问题持续的条件
 
 ## 安装方式
@@ -142,6 +159,11 @@ clawhub install body-root-cause
 我睡眠很差，镁/L-茶氨酸/甘氨酸哪个更适合我？
 最近容易疲劳，不知道是缺铁还是缺 B12 还是别的原因
 我想买基础补剂，不知道从哪里开始
+
+// 病历相关
+帮我建立健康档案
+我来汇报上次方案的效果
+我最近查了体检，有新数据想更新
 ```
 
 ## 重要说明
