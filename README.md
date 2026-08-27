@@ -1,178 +1,230 @@
-# Body Root Cause Skill
+<div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/JackZhong2017/body-root-cause-skill?style=flat-square)
-![License](https://img.shields.io/github/license/JackZhong2017/body-root-cause-skill?style=flat-square)
-![Skill](https://img.shields.io/badge/Skill-Agent-111111?style=flat-square)
-![Claude Code](https://img.shields.io/badge/Claude%20Code-Supported-6B5B95?style=flat-square)
-![OpenClaw](https://img.shields.io/badge/OpenClaw-Supported-2E8B57?style=flat-square)
-![Version](https://img.shields.io/badge/version-2.0.0-blue?style=flat-square)
+# 🌿 Body Root Cause
 
-> 🌏 **English version: [README.en.md](./README.en.md)**
+### System-level supplement decision support for AI agents
 
-一个基于**循证营养学 + 贝叶斯推理**的内服补剂诊断 Skill，帮助你从系统性根因出发，找到身体问题的真正答案。
+**Map the problem. Update the evidence. Test one variable. Learn from the result.**
 
-**v2.0 新增：数字病历本系统。** 首次使用自动建档，跨对话追踪你的健康状态变化，每次问诊都能更精准——不用重复说明自己的基础病、用药、体检数据。
+[![Version](https://img.shields.io/badge/version-2.2-2563EB?style=for-the-badge)](./body-root-cause/SKILL.md)
+[![Language](https://img.shields.io/badge/core-English-111827?style=for-the-badge)](./body-root-cause/SKILL.md)
+[![License](https://img.shields.io/github/license/JackZhong2017/body-root-cause-skill?style=for-the-badge)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/JackZhong2017/body-root-cause-skill?style=for-the-badge)](https://github.com/JackZhong2017/body-root-cause-skill/stargazers)
 
-## 30秒开始
+A portable `SKILL.md` for generally healthy adults with everyday health concerns or supplement questions. It uses structured intake, qualitative Bayesian updating, and longitudinal records to turn vague symptoms into a cautious, testable next step.
+
+[Quick start](#quick-start) · [How it works](#how-it-works) · [What changed in v2.2](#what-changed-in-v22) · [Installation](#installation) · [Safety](#safety)
+
+</div>
+
+---
+
+## Why this skill exists
+
+Health questions often begin with a symptom and jump directly to a supplement. That shortcut can produce confident stories, oversized stacks, and results that are impossible to attribute.
+
+Body Root Cause follows a tighter decision loop:
+
+```text
+Concern
+   ↓
+Confirmed facts + relevant system scan
+   ↓
+Leading hypothesis + competing explanation
+   ↓
+Highest-value question, observation, or test
+   ↓
+One attributable action
+   ↓
+Measured follow-up → global update
+```
+
+The goal is practical judgment under uncertainty. The skill can recommend observation, a lifestyle change, a decision-changing test, a single supplement trial, or clinical evaluation.
+
+## Quick start
 
 ```bash
 npx skills add https://github.com/JackZhong2017/body-root-cause-skill --skill body-root-cause
 ```
 
-也可以直接把这段话发给有 shell 权限的 AI Agent：
+Then ask a decision-oriented question:
 
 ```text
-帮我安装 body-root-cause。请把 https://github.com/JackZhong2017/body-root-cause-skill 克隆到 ~/.claude/skills/body-root-cause，安装完成后检查 SKILL.md 是否存在。
+I have been tired lately. Should I check iron or vitamin B12 first?
+
+My sleep is poor. Which is a better fit: magnesium, glycine, or L-theanine?
+
+I keep getting bloated. Should I continue taking a probiotic?
+
+My vitamin D result is low. How should I supplement and retest?
 ```
 
-已经安装过的话，用这段话更新：
+The internal operating layer is English. Questions and visible answers follow the user's current language unless another language is requested.
+
+## How it works
+
+### 1. Define the decision
+
+The skill first identifies whether the user needs concern assessment, supplement selection, result interpretation, follow-up, or general knowledge.
+
+### 2. Scan only relevant systems
+
+It considers the domains that could change the action:
+
+| Domain | Examples of decision-relevant information |
+|---|---|
+| Sleep and recovery | Sleep opportunity, schedule, training recovery, recent infection |
+| Intake and nutrition | Energy intake, protein, restrictions, measured deficiency risk |
+| Medications and supplements | Starts, stops, dose changes, duplicate ingredients, interactions |
+| Metabolic and endocrine context | Weight trend, menstrual context, glucose-related clues, existing tests |
+| Digestion and absorption | Bowel pattern, persistent GI concerns, food relationships, absorption limits |
+| Stress and behavior | Stress timeline, caffeine, alcohol, routines, maintaining loops |
+| Environment and routine | Travel, work pattern, exposures, food environment, activity changes |
+
+A domain is a search area. It becomes a candidate explanation only when individual evidence connects it to the concern.
+
+### 3. Update evidence qualitatively
+
+Each candidate is evaluated through:
+
+- baseline basis;
+- supporting evidence;
+- opposing evidence;
+- unknown information;
+- competing explanations;
+- decision impact.
+
+Evidence updates are labeled **strong**, **moderate**, **weak**, or **no update**. The skill does not manufacture percentages from arrows, scores, or wording intensity.
+
+### 4. Preserve uncertainty that matters
+
+Visible output separates:
 
 ```text
-帮我更新 body-root-cause。请进入 ~/.claude/skills/body-root-cause 执行 git pull，然后告诉我当前最新 commit。
+Confirmed facts
+Leading hypothesis
+Competing hypothesis
+Highest-value next information
+Current action
+Next candidate
+Safety and clinical boundary
 ```
 
-## 它能解决什么问题
+A leading hypothesis remains an inference. A plausible mechanism does not automatically become a proven root cause or a supplement recommendation.
 
-不是告诉你"吃什么好"，而是先帮你搞清楚"为什么会这样"。
+### 5. Test one variable
 
-**皮肤调理**
-- 痤疮/闭口反复发作，外用无效
-- 下巴/下颌线长痘（可能是激素或 PCOS）
-- 出差/换城市后皮肤突然爆发
-- 色斑、油皮、敏感等根因不明的皮肤问题
+A supplement trial defines the target, rationale, protocol, review window, outcome measures, stop rules, and constraints. Deferred options remain under **Next candidate** instead of becoming a simultaneous shopping list.
 
-**通用补剂决策**
-- 睡眠差，不知道选镁/L-茶氨酸还是甘氨酸
-- 容易疲劳，分不清是缺铁、缺 B12 还是别的原因
-- 想买基础补剂，不知道从哪里开始
-- 健身、备孕、PCOS 等特定场景的补剂搭配
+## What changed in v2.2
 
-## 工作原理
+| Previous limitation | v2.2 behavior |
+|---|---|
+| Arrow-based weights implied precision without calculation | Qualitative Bayesian updates include supporting, opposing, and missing evidence |
+| One symptom or body location could dominate the conclusion | Single manifestations provide at most a weak update |
+| A fixed acne-centered hypothesis library narrowed the reasoning | Relevant system domains are selected from the user's actual concern |
+| "Root cause" could appear before alternatives were tested | Output preserves leading and competing hypotheses until evidence supports stronger language |
+| Multi-supplement plans obscured attribution | One new variable is tested at a time with predefined measures and stop rules |
+| Internal instructions depended on Chinese | The complete operating layer and canonical record schema are English |
 
+## Longitudinal health record
+
+When the environment supports files, the default record is:
+
+```text
+~/.health-records/medical-record.md
 ```
-病历本检查 → 问诊（已知信息自动跳过）→ 贝叶斯权重更新 → 根因定位 → 分层干预方案 → 病历更新
+
+It can store:
+
+- baseline constraints;
+- laboratory values with date, unit, and reference range;
+- medication and supplement starts/stops;
+- concern history;
+- intervention outcomes and concurrent changes.
+
+Canonical fields are English for portability across models. The skill asks for consent before writing and does not load a user's record for third-party questions.
+
+## Installation
+
+The repository packages the skill as a self-contained directory:
+
+```text
+body-root-cause-skill/
+├── body-root-cause/
+│   └── SKILL.md
+├── LICENSE
+└── README.md
 ```
 
-### 数字病历本（v2.0 核心功能）
+### Codex
 
-类似医院的病历本，持续记录你的健康状态变化：
+Copy `body-root-cause/` to:
 
-- **基础信息**：慢性病、长期用药、饮食限制、过敏
-- **检查报告时间轴**：每次体检数据带日期存档
-- **用药与补剂记录**：何时开始、何时停用、原因
-- **问诊记录**：每次对话的主诉、根因、方案摘要
-- **效果追踪**：你的反馈影响下次推荐权重
+```text
+~/.codex/skills/body-root-cause/
+```
 
-**存储方式（按环境自适应）：**
-- Claude Code：写入本地 `~/.health-records/medical-record.md`，标准 Markdown 格式，可迁移至任何 AI 工具
-- 手机 App：存入 Claude 记忆，每次对话结束输出可复制摘要供用户备份
-
-### 7 大根因假设，系统性排查
-
-| 假设 | 根因 |
-|------|------|
-| H1 | 雄激素性痤疮（激素驱动） |
-| H2 | PCOS / 胰岛素抵抗 |
-| H3 | 皮质醇过高（压力驱动） |
-| H4 | 肠道菌群失调 / H. pylori |
-| H5 | 营养缺乏（锌/维D/Omega-3/铁） |
-| H6 | 环境触发（水质/污染/饮食骤变） |
-| H7 | 护肤品/药物诱发 |
-
-**输出方案三层覆盖**——只处理触发因素会反复，只处理根因短期无效：
-
-- **根本原因（Root Cause）**：长期存在的系统性问题
-- **触发因素（Trigger）**：短期出现的外部事件
-- **维持因素（Perpetuating Factor）**：让问题持续的条件
-
-## 安装方式
+For project-scoped use, place it under the project's `.codex/skills/` directory.
 
 ### Claude Code
 
-**方式一：命令行一键安装（推荐）**
+Copy `body-root-cause/` to:
 
-```bash
-# 个人全局安装（所有项目可用）
-mkdir -p ~/.claude/skills && \
-  git clone https://github.com/JackZhong2017/body-root-cause-skill.git /tmp/brc-skill && \
-  cp -r /tmp/brc-skill/body-root-cause ~/.claude/skills/body-root-cause
-
-# Windows（PowerShell）
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills"
-git clone https://github.com/JackZhong2017/body-root-cause-skill.git "$env:TEMP\brc-skill"
-Copy-Item -Recurse "$env:TEMP\brc-skill\body-root-cause" "$env:USERPROFILE\.claude\skills\body-root-cause"
+```text
+~/.claude/skills/body-root-cause/
 ```
 
-**方式二：手动安装**
-
-1. 下载本仓库：点击右上角 `Code → Download ZIP`，解压
-2. 将 `body-root-cause` 文件夹复制到以下路径：
-
-| 系统 | 路径 |
-|------|------|
-| macOS / Linux | `~/.claude/skills/body-root-cause/` |
-| Windows | `%USERPROFILE%\.claude\skills\body-root-cause\` |
-
-3. 确认目录结构为 `skills/body-root-cause/SKILL.md`（不要多嵌套一层）
-4. 重启 Claude Code，输入 `/skills` 确认加载成功
-
-> **项目级安装**：将文件夹放到项目目录下的 `.claude/skills/body-root-cause/`，仅对该项目生效。
-
----
+For project-scoped use, place it under the project's `.claude/skills/` directory.
 
 ### OpenClaw
 
-**方式一：直接粘贴 GitHub 链接**
-
-在对话中发送：
-```
-Install this skill: https://github.com/JackZhong2017/body-root-cause-skill
-```
-OpenClaw 会自动识别并安装。
-
-**方式二：CLI 安装**
-
 ```bash
-# 安装到当前工作区
 openclaw skills install https://github.com/JackZhong2017/body-root-cause-skill
-
-# 全局安装（所有 agent 可用）
-openclaw skills install https://github.com/JackZhong2017/body-root-cause-skill --global
 ```
 
-**方式三：ClawHub 安装**（上架后可用）
+Add `--global` when a global installation is appropriate.
 
-```bash
-clawhub install body-root-cause
-```
+### Other agents
 
----
+Use the repository with any agent that supports portable `SKILL.md` instructions. Keep the `body-root-cause/SKILL.md` path intact unless the host defines another skill-directory convention.
 
-### 触发示例
+## Boundaries
 
-安装完成后，直接在对话中提问即可自动触发：
+Body Root Cause is designed for:
 
-```
-我最近痤疮一直反复，吃什么能改善？
-为什么我下巴总是长痘？
-帮我搭配一套针对 PCOS 的补剂方案
-我睡眠很差，镁/L-茶氨酸/甘氨酸哪个更适合我？
-最近容易疲劳，不知道是缺铁还是缺 B12 还是别的原因
-我想买基础补剂，不知道从哪里开始
+- everyday health concerns in generally healthy adults;
+- deciding whether a supplement trial is justified;
+- choosing the next useful question, measurement, or test;
+- tracking one-variable interventions over time;
+- explaining why the evidence is insufficient to act.
 
-// 病历相关
-帮我建立健康档案
-我来汇报上次方案的效果
-我最近查了体检，有新数据想更新
-```
+It does not:
 
-## 重要说明
+- diagnose disease;
+- replace a clinician;
+- direct prescription-medication changes;
+- run the adult supplement workflow for children;
+- provide topical skincare recommendations;
+- infer an individual cause from a population association, one symptom, or an anecdote.
 
-- 本 Skill **不做医疗诊断**，补剂建议不能替代处方药
-- 若症状持续加重或常规调理 3 个月无响应，建议优先就医
-- 所有推荐成分以有可信临床证据（RCT 或系统综述支持）为准入门槛
-- 严格只处理内服建议，不输出外用护肤品推荐
+## Safety
+
+This repository provides an AI reasoning workflow, not medical care. Supplement decisions can be affected by diagnosed conditions, pregnancy, medications, allergies, total intake, and product quality.
+
+If a concern needs diagnosis or prescription treatment, keeps worsening, substantially impairs daily function, or involves an acute serious manifestation, clinical evaluation is the appropriate next step.
+
+## Contributing
+
+Focused improvements are welcome. Changes should preserve the core invariants:
+
+1. distinguish facts from hypotheses;
+2. keep decision-relevant alternatives;
+3. avoid unsupported numerical confidence;
+4. prefer one attributable intervention;
+5. keep the internal operating layer in English;
+6. preserve the final safety boundary.
 
 ## License
 
-MIT © 2026 jjjjjjjjjjjjack — 可自由使用、修改、商用，需保留版权声明。完整条款见 [LICENSE](LICENSE)。
+[MIT](./LICENSE) © 2026 jjjjjjjjjjjjack
